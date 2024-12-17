@@ -31,29 +31,28 @@ public class Main {
 
         while (!loggedIn) {
 
-            boolean opcioValida=false;
-            int opcioMenu=0;
+            boolean opcioValida = false;
+            int opcioMenu = 0;
 
-                while(!opcioValida)
-                   try {
-                System.out.println("\n\nRECOMANADOR DE PEL·LÍCULES\n");
-                System.out.println("1. Crear un compte");
-                System.out.println("2. Iniciar sessió");
-                System.out.println("3. Sortir del programa");
-                System.out.print("\nTriï una opció: ");
+            while (!opcioValida)
+                try {
+                    System.out.println("\n\nRECOMANADOR DE PEL·LÍCULES\n");
+                    System.out.println("1. Crear un compte");
+                    System.out.println("2. Iniciar sessió");
+                    System.out.println("3. Sortir del programa");
+                    System.out.print("\nTriï una opció: ");
 
-                opcioMenu = sc.nextInt();
+                    opcioMenu = sc.nextInt();
 
-                if(opcioMenu<1||opcioMenu>3){
+                    if (opcioMenu < 1 || opcioMenu > 3) {
+                        System.out.println("Ha d'escollir un número del 1 al 3");
+                    } else if (opcioMenu >= 1 && opcioMenu <= 3) {
+                        opcioValida = true;
+                    }
+                } catch (InputMismatchException e) {
                     System.out.println("Ha d'escollir un número del 1 al 3");
+                    sc.nextLine();
                 }
-                else if (opcioMenu>=1 && opcioMenu<=3){
-                    opcioValida=true;
-                }
-            }   catch (InputMismatchException e){
-                       System.out.println("Ha d'escollir un número del 1 al 3");
-                       sc.nextLine();
-            }
 
             switch (opcioMenu) {
 
@@ -70,8 +69,7 @@ public class Main {
                         checkPass = sc.next();
                         if (!Objects.equals(createPass, checkPass)) {
                             System.out.println("\nLes contrasenyes no coincideixen");
-                        }
-                        else if(checkPass.equals(createPass)){
+                        } else if (checkPass.equals(createPass)) {
                             System.out.println("\nCompte creat correctament! Si us plau, inicieu sessió.");
                             samePass = true;
                         }
@@ -79,23 +77,22 @@ public class Main {
                     break;
 
                 case 2:
-                    while (!loggedIn){
+                    while (!loggedIn) {
 
-                    System.out.print("Introdueixi el nom d'usuari o correu electrònic: ");
-                    username = sc.next();
-                    System.out.print("Introdueixi la contrasenya: ");
-                    String pass = sc.next();
+                        System.out.print("Introdueixi el nom d'usuari o correu electrònic: ");
+                        username = sc.next();
+                        System.out.print("Introdueixi la contrasenya: ");
+                        String pass = sc.next();
 
-                    if (username.equals(email) || username.equals(createUsername) ) {
+                        if (username.equals(email) || username.equals(createUsername)) {
 
-                        if( pass.equals(createPass)){
-                        System.out.println("\nHa iniciat sessió correctament!");
-                            loggedIn = true;
+                            if (pass.equals(createPass)) {
+                                System.out.println("\nHa iniciat sessió correctament!");
+                                loggedIn = true;
+                            } else {
+                                System.out.println("Contasenya incorrecta");
+                            }
                         } else {
-                            System.out.println("Contasenya incorrecta");
-                        }
-                    }
-                        else  {
                             System.out.println("Usuari i/o contrasenya incorrectes.");
                             System.out.print("\nVols registrarte? ");
                             String goToSingUp = sc.next().toLowerCase();
@@ -107,7 +104,7 @@ public class Main {
 
                     while (loggedIn) {
 
-                        int opcioPelis=0;
+                        int opcioPelis = 0;
                         boolean opcioValida2 = false;
 
                         while (!opcioValida2) {
@@ -128,12 +125,11 @@ public class Main {
                                 } else if (opcioPelis >= 1 && opcioPelis <= 5) {
                                     opcioValida2 = true;
                                 }
+                            } catch (InputMismatchException e) {
+                                System.out.println("Ha d'escollir un número del 1 al 3");
+                                sc.nextLine();
                             }
-                            catch(InputMismatchException e){
-                            System.out.println("Ha d'escollir un número del 1 al 3");
-                            sc.nextLine();
                         }
-                    }
                         switch (opcioPelis) {
                             case 1:
                                 boolean found = false;
@@ -186,24 +182,24 @@ public class Main {
                                 break;
 
                             case 3:
-                                    System.out.println("\nBenvingut al teu perfil\n");
-                                    System.out.println("Usuari: " + username);
-                                    System.out.println("Eail: " + email);
-                                    System.out.print("Introdueixi la seva pel·lícula preferida: ");
-                                    favMovie = sc.nextLine();
+                                System.out.println("\nBenvingut al teu perfil\n");
+                                System.out.println("Usuari: " + username);
+                                System.out.println("Eail: " + email);
+                                System.out.print("Introdueixi la seva pel·lícula preferida: ");
+                                favMovie = sc.nextLine();
                                 while (favMovie.isEmpty()) ;
-                                    System.out.println("\nBenvingut al teu perfil\n");
-                                    System.out.println("Usuari: " + username);
-                                    System.out.println("Eail: " + email);
-                                    System.out.println("Pel·licula preferida: " + favMovie);
+                                System.out.println("\nBenvingut al teu perfil\n");
+                                System.out.println("Usuari: " + username);
+                                System.out.println("Eail: " + email);
+                                System.out.println("Pel·licula preferida: " + favMovie);
 
-                                    System.out.print("\nVols tornar enrere? ");
-                                    back = sc.next();
-                                    if (back.equals("si")) break;
-                                    else if (back.equals("no")) continue;
-                                    else System.out.println("Si us plau, respongui amb “si” o “no”.");
+                                System.out.print("\nVols tornar enrere? ");
+                                back = sc.next();
+                                if (back.equals("si")) break;
+                                else if (back.equals("no")) continue;
+                                else System.out.println("Si us plau, respongui amb “si” o “no”.");
 
-                            break;
+                                break;
 
                             case 4:
                                 loggedIn = false;
@@ -220,7 +216,7 @@ public class Main {
                     }
                     break;
 
-                    case 3:
+                case 3:
                     System.out.println("Sortint del programa. Fins aviat!");
                     System.exit(0);
 
