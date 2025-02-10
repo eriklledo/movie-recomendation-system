@@ -1,6 +1,6 @@
 import java.util.Set;
 
-public class RecomenderManager  {
+public class RecomenderManager {
     private Set<Movie> movies;
     private Set<User> users;
 
