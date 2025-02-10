@@ -3,7 +3,7 @@ import java.time.Year;
 
 public class Actor extends Person {
 
-    public Actor(int id, String name, Year dateOfBirth, String nationality) {
+    public Actor(int id, String name, LocalDate dateOfBirth, String nationality) {
         super(id, name, dateOfBirth, nationality);
     }
 

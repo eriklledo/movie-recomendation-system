@@ -16,6 +16,9 @@ public class Person {
         this.nationality = nationality;
     }
 
+    public Person() {
+    }
+
     public int getId() {
         return id;
     }

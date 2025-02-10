@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.time.Year;
 
 public class Director extends Person {
-    public Director(int id, String name, Year dateOfBirth, String nationality) {
+    public Director(int id, String name, LocalDate dateOfBirth, String nationality) {
         super(id, name, dateOfBirth, nationality);
     }
 
