@@ -1,8 +1,11 @@
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Iteracio1 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
 
         boolean loggedIn = false;
         String createUsername = "";
@@ -225,4 +228,11 @@ public class Iteracio1 {
             }
         }
     }
+    public static boolean MailChecking(String mail) {
+
+        Pattern clean = Pattern.compile("([a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)");
+        Matcher search = clean.matcher(mail);
+        return search.find();
+    }
 }
+
