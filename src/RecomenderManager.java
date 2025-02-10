@@ -31,10 +31,8 @@ public class RecomenderManager {
     }
 
     public void removeUserById(int id) {
-        users.removeIf(book -> book.getId() == id);
+        users.removeIf(user -> user.getId() == id);
     }
-
-
 
     @Override
     public String toString() {

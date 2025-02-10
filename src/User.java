@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.Year;
 
 public class User extends Person{
@@ -5,7 +6,7 @@ public class User extends Person{
     private String mail;
     private String password;
 
-    public User(int id, String name, Year dateOfBirth, String nationality, String username, String mail, String password) {
+    public User(int id, String name, LocalDate dateOfBirth, String nationality, String username, String mail, String password) {
         super(id, name, dateOfBirth, nationality);
         this.username = username;
         this.mail = mail;
@@ -36,7 +37,7 @@ public class User extends Person{
         this.password = password;
     }
 
-    public User(int id, String name, Year dateOfBirth, String nationality) {
+    public User(int id, String name, LocalDate dateOfBirth, String nationality) {
         super(id, name, dateOfBirth, nationality);
     }
 
@@ -61,12 +62,12 @@ public class User extends Person{
     }
 
     @Override
-    public Year getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return super.getDateOfBirth();
     }
 
     @Override
-    public void setDateOfBirth(Year dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         super.setDateOfBirth(dateOfBirth);
     }
 

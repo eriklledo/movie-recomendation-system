@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.Year;
 
 public class Actor extends Person {
@@ -27,12 +28,12 @@ public class Actor extends Person {
     }
 
     @Override
-    public Year getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return super.getDateOfBirth();
     }
 
     @Override
-    public void setDateOfBirth(Year dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         super.setDateOfBirth(dateOfBirth);
     }
 

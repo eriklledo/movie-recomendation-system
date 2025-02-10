@@ -1,12 +1,15 @@
+import java.time.LocalDate;
 import java.time.Year;
+import java.util.Date;
+import java.util.Locale;
 
 public class Person {
     private int id;
     private String name;
-    private Year dateOfBirth;
+    private LocalDate dateOfBirth;
     private String nationality;
 
-    public Person(int id, String name, Year dateOfBirth, String nationality) {
+    public Person(int id, String name, LocalDate dateOfBirth, String nationality) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -29,11 +32,11 @@ public class Person {
         this.name = name;
     }
 
-    public Year getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Year dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
