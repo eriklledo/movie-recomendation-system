@@ -24,6 +24,15 @@ public class RecomenderManager {
         users.add(user);
     }
 
+    public void showAllUsers() {
+        for (User user : users) {
+            System.out.println(user);
+        }
+    }
+
+    public void removeUserById(int id) {
+        users.removeIf(book -> book.getId() == id);
+    }
 
 
 
