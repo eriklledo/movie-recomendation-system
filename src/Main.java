@@ -12,10 +12,10 @@ public class Main {
                 RECOMANADOR DE PEL·LÍCULES
                 """);
 
-        boolean login = false;
-        while (!login) {
-            login = menu1(sc,mRM);
-            while (login) {
+        boolean loggedIn = false;
+        while (!loggedIn) {
+            loggedIn = menu1(sc,mRM,loggedIn);
+            while (loggedIn) {
                 System.out.println("""
                     
                     PEL·LÍCULES DISPONIBLES
@@ -49,10 +49,11 @@ public class Main {
 
                     case 4:
                         System.out.println("4");
+                        //TODO
                         break;
                     case 5:
                         System.out.println("5");
-                        login = false;
+                        loggedIn = false;
                         break;
                     case 0:
                         System.exit(0);
@@ -64,8 +65,7 @@ public class Main {
         sc.close();
     }
 
-    public static boolean menu1(Scanner sc, MovieRecomendationManager mRM){
-        boolean login = false;
+    public static boolean menu1(Scanner sc, MovieRecomendationManager mRM, boolean login){
         System.out.println("""
                     
                     INICI DE SESSIÓ
@@ -85,7 +85,7 @@ public class Main {
                 mRM.addUser(createUser(sc, mRM));
                 break;
             case 2:
-                login(sc, mRM);
+                logIn(sc, mRM);
                 System.out.println(login);
                 break;
             case 3:
@@ -174,7 +174,7 @@ public class Main {
 
     }
 
-    public static boolean login(Scanner sc,MovieRecomendationManager mRM) {
+    public static boolean logIn(Scanner sc,MovieRecomendationManager mRM) {
         while (true) {
             System.out.print("Introdueixi el nom d'usuari o correu electronic: ");
             String checkUser = sc.next();
