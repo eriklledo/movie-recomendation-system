@@ -1,14 +1,17 @@
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class MovieRecomendationManager {
     private Set<Movie> movies;
     private Set<User> users;
 
-    public MovieRecomendationManager() {
+    public MovieRecomendationManager(Set<Movie> movies, Set<User> users) {
         this.movies = new HashSet<>();
         this.users = new HashSet<>();
+    }
+
+    public MovieRecomendationManager() {
+        movies = new HashSet<>();
+        users = new HashSet<>();
     }
 
     public Set<Movie> getMovies() {
@@ -18,6 +21,7 @@ public class MovieRecomendationManager {
     public void setMovies(Set<Movie> movies) {
         this.movies = movies;
     }
+
 
     public Set<User> getUsers() {
         return users;
@@ -31,12 +35,11 @@ public class MovieRecomendationManager {
         users.add(user);
     }
 
-    public void searchUserbyUsername(Scanner sc) {
-        String searchUser = sc.next();
+    public void searchUserbyUsername(String userName) {
         for (User user : users) {
-            if (user.getUsername().equals(searchUser)) {
+            if (user.getUsername().equals(userName)) {
                 System.out.println(user);
-            } else if (user.getMail().equals(searchUser)) {
+            } else if (user.getMail().equals(userName)) {
                 System.out.println(user);
 
             } else {
@@ -64,6 +67,27 @@ public class MovieRecomendationManager {
     public void removeUserById(int id) {
         users.removeIf(user -> user.getId() == id);
     }
+
+    public List<Movie> filterMovies(String title){
+        return movies.stream()
+                .sorted(Comparator.comparing(a -> a.getTitle().equals(title)))
+                .toList();
+    }
+
+
+//    System.out.print("\nVols tornar enrere? ");
+//    back = sc.next();
+//        if (back.equalsIgnoreCase("si")) {
+//            break;
+//        } else if (back.equalsIgnoreCase("no")) found = false;
+//        else System.out.println("Si us plau, respongui amb “si” o “no”.");
+
+    public void listMovies(){
+        for (Movie m: movies){
+            System.out.println(m);
+        }
+    }
+
 
     @Override
     public String toString() {
