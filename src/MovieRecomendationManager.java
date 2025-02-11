@@ -10,8 +10,8 @@ public class MovieRecomendationManager {
     }
 
     public MovieRecomendationManager() {
-        this.movies = new HashSet<>();
-        this.users = new HashSet<>();
+        movies = new HashSet<>();
+        users = new HashSet<>();
     }
 
     public Set<Movie> getMovies() {
@@ -81,6 +81,12 @@ public class MovieRecomendationManager {
 //            break;
 //        } else if (back.equalsIgnoreCase("no")) found = false;
 //        else System.out.println("Si us plau, respongui amb “si” o “no”.");
+
+    public void listMovies(){
+        for (Movie m: movies){
+            System.out.println(m);
+        }
+    }
 
 
     @Override

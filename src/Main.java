@@ -30,7 +30,7 @@ public class Main {
 
             switch (option) {
                 case 1:
-                    createUser(sc, mRM);
+                    mRM.addUser(createUser(sc, mRM));
                     break;
                 case 2:
                     login(sc, mRM);
@@ -68,6 +68,7 @@ public class Main {
             switch (option) {
                 case 1:
                     System.out.println("1");
+                    mRM.listMovies();
                     break;
 
                 case 2:
@@ -114,7 +115,7 @@ public class Main {
         mRM.addUser(erik);
     }
 
-    public static void createUser(Scanner sc, MovieRecomendationManager mRM) {
+    public static User createUser(Scanner sc, MovieRecomendationManager mRM) {
         String username = "";
         String email = "";
         String password = "";
@@ -165,12 +166,12 @@ public class Main {
             break;
         }
 
-        User user = new User(username, email, password);
-        mRM.addUser(user);
         System.out.println("\nUsuari creat correctament!");
+        return new User(username, email, password);
+
     }
 
-    public static boolean login(Scanner sc, MovieRecomendationManager mRM) {
+    public static boolean login(Scanner sc,MovieRecomendationManager mRM) {
         while (true) {
             System.out.print("Introdueixi el nom d'usuari o correu electronic: ");
             String checkUser = sc.next();
