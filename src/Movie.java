@@ -1,4 +1,5 @@
 import java.time.Year;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Movie {
@@ -8,6 +9,25 @@ public class Movie {
     private Set<Actor> actors;
     private Set<String> genre;
     private Year year;
+
+    public Movie(Year year, String title, int id) {
+        this.year = year;
+        this.title = title;
+        this.id = id;
+        directors = new HashSet<>();
+        actors = new HashSet<>();
+        genre = new HashSet<>();
+    }
+
+    public Movie(Year year, String title, int id, Set<Director>directors, Set<Actor>actors, Set<String> genre) {
+        this.year = year;
+        this.title = title;
+        this.id = id;
+        this.directors = directors;
+        this.actors = actors;
+        this.genre = genre;
+    }
+
 
     public int getId() {
         return id;

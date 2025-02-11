@@ -14,42 +14,9 @@ public class Main {
 
         boolean login = false;
         while (!login) {
-            System.out.println("""
-                    
-                    INICI DE SESSIÓ
-                    
-                    1. Nou usuari
-                    2. Iniciar sessió
-                    3. Entra com a convidat
-                    0. Sortir de programa
-                    
-                    """);
-            System.out.print("Triï una opció: ");
-            int option = sc.nextInt();
-            sc.nextLine();
-
-            switch (option) {
-                case 1:
-                    mRM.addUser(createUser(sc, mRM));
-                    break;
-                case 2:
-                    login(sc, mRM);
-                    System.out.println(login);
-                    break;
-                case 3:
-                    login = true;
-                    break;
-                case 0:
-                    System.exit(0);
-                default:
-                    System.out.println("Opció no vàlida. Torni a intentar-ho.");
-            }
-        }
-
-
-        boolean inMovieMenu = true;
-        while (inMovieMenu) {
-            System.out.println("""
+            login = menu1(sc,mRM);
+            while (login) {
+                System.out.println("""
                     
                     PEL·LÍCULES DISPONIBLES
                     
@@ -61,39 +28,75 @@ public class Main {
                     0. Sortir del programa
                     
                     """);
-            System.out.print("Triï una opció: ");
-            int option = sc.nextInt();
-            sc.nextLine();
+                System.out.print("Triï una opció: ");
+                int option = sc.nextInt();
+                sc.nextLine();
 
-            switch (option) {
-                case 1:
-                    System.out.println("1");
-                    mRM.listMovies();
-                    break;
+                switch (option) {
+                    case 1:
+                        System.out.println("1");
+                        mRM.listMovies();
+                        break;
 
-                case 2:
-                    System.out.println("2");
-                    break;
-                case 4:
-                    System.out.println("Ho sentim, aquesta funció, encara no está disponible");
-                    break;
-                case 3:
-                    System.out.println("4");
-                    break;
-                case 5:
-                    System.out.println("5");
-                    break;
-                case 6:
-                    System.out.println("Tancant sessió...");
-                    inMovieMenu = false;
-                    break;
-                case 0:
-                    System.exit(0);
-                default:
-                    System.out.println("Opció no vàlida. Torni a intentar-ho.");
+                    case 2:
+                        System.out.println("2");
+                        //TODO
+                        break;
+
+                    case 3:
+                        System.out.println("Ho sentim, aquesta funció, encara no está disponible");
+                        break;
+
+                    case 4:
+                        System.out.println("4");
+                        break;
+                    case 5:
+                        System.out.println("5");
+                        login = false;
+                        break;
+                    case 0:
+                        System.exit(0);
+                    default:
+                        System.out.println("Opció no vàlida. Torni a intentar-ho.");
+                }
             }
         }
         sc.close();
+    }
+
+    public static boolean menu1(Scanner sc, MovieRecomendationManager mRM){
+        boolean login = false;
+        System.out.println("""
+                    
+                    INICI DE SESSIÓ
+                    
+                    1. Nou usuari
+                    2. Iniciar sessió
+                    3. Entra com a convidat
+                    0. Sortir de programa
+                    
+                    """);
+        System.out.print("Triï una opció: ");
+        int option = sc.nextInt();
+        sc.nextLine();
+
+        switch (option) {
+            case 1:
+                mRM.addUser(createUser(sc, mRM));
+                break;
+            case 2:
+                login(sc, mRM);
+                System.out.println(login);
+                break;
+            case 3:
+                login = true;
+                break;
+            case 0:
+                System.exit(0);
+            default:
+                System.out.println("Opció no vàlida. Torni a intentar-ho.");
+        }
+        return login;
     }
 
     public static boolean MailChecking(String mail) {
