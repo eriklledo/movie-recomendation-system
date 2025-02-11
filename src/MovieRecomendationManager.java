@@ -6,11 +6,6 @@ public class MovieRecomendationManager {
     private Set<Movie> movies;
     private Set<User> users;
 
-    public MovieRecomendationManager(Set<Movie> movies, Set<User> users) {
-        this.movies = new HashSet<>();
-        this.users = new HashSet<>();
-    }
-
     public MovieRecomendationManager() {
         this.movies = new HashSet<>();
         this.users = new HashSet<>();
