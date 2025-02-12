@@ -97,12 +97,16 @@ public class Main {
                 switch (choice) {
                     case 1:
                         // TODO
+                        break;
                     case 2:
                         // TODO
+                        break;
                     case 3:
                         System.out.println("Ho sentim, aquesta funció encara no està disponible");
+                        break;
                     case 4:
                         // TODO
+                        break;
                     case 5:
                         System.out.println("\nTancant sessió...\n");
                         return false;

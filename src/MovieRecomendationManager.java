@@ -9,6 +9,7 @@ public class MovieRecomendationManager {
     private Set<Actor> actors;
     private Set<User> users;
 
+
     public MovieRecomendationManager(Set<Movie> movies, Set<Director> directors, Set<Actor> actors, Set<User> users) {
         this.movies = movies;
         this.directors = directors;
@@ -18,12 +19,17 @@ public class MovieRecomendationManager {
 
     public MovieRecomendationManager() {
         movies = new HashSet<>();
-        users = new HashSet<>();
         directors = new HashSet<>();
         actors = new HashSet<>();
+        users = new HashSet<>();
         addDefaultDirectors(createDefaultDirectors());
         addDefaultActors(createDefaultActors());
         addDefaultMovies();
+        addUser(new User("admin", "bustiad@gmail.com", "@dm1n"));
+        addUser(new User(1, "Èrik", LocalDate.of(2004, 10, 15), "Spanish", "erik", "sonwerik@mail.com", "miau"));
+        addUser(new User(2, "Jordi", LocalDate.of(2000, 1, 1), "Spanish", "jordi", "jordi@mail.com", "password"));
+        addUser(new User(3, "Alam", LocalDate.of(2006, 1, 1), "Spanish", "alam", "alam@mail.com", "contraseña"));
+        addUser(new User(4, "Joan", LocalDate.of(2006, 1, 1), "Spanish", "joan", "joan@mail.com", "contrasenya"));
     }
 
     private Set<Director> createDefaultDirectors() {
