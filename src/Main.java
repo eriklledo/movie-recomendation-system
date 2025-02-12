@@ -71,6 +71,7 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("\nNomés s'accepten nombres enters.\n");
+                sc.nextLine();
             }
         }
     }
@@ -112,6 +113,7 @@ public class Main {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("\nNomés s'accepten nombres enters.");
+                sc.nextLine();
             }
         }
     }
