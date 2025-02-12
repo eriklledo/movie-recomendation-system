@@ -30,7 +30,7 @@ public class Main {
                 return;
             }
 
-            boolean exit = showMovieMenu(sc,manager);
+            boolean exit = showMovieMenu(sc, manager);
             if (exit) {
                 System.out.println("\nSortint del programa...");
                 System.out.println("Fins aviat!");
@@ -104,7 +104,7 @@ public class Main {
                         enter(sc);
                         break;
                     case 2:
-                        movieSearcher(sc,manager);
+                        movieSearcher(sc, manager);
                         enter(sc);
                         break;
                     case 3:
@@ -117,11 +117,11 @@ public class Main {
                         enter(sc);
                         break;
                     case 5:
-                        profileSearcher(sc,manager);
+                        profileSearcher(sc, manager);
                         enter(sc);
                         break;
                     case 6:
-                        manageFriendRequests(sc,manager);
+                        manageFriendRequests(sc, manager);
                         enter(sc);
                         break;
                     case 7:
@@ -255,10 +255,15 @@ public class Main {
                 String answer;
                 do {
                     System.out.print("Vols tornar enrere i registrar-te? ");
-                    answer = sc.next().toLowerCase();
-                } while (!answer.equalsIgnoreCase("si") || !answer.equalsIgnoreCase("s") && !answer.equalsIgnoreCase("no") || !answer.equalsIgnoreCase("n"));
+                    answer = sc.nextLine().toLowerCase();
+                    if (!answer.equalsIgnoreCase("si") && !answer.equalsIgnoreCase("s") && !answer.equalsIgnoreCase("no") && !answer.equalsIgnoreCase("n")) {
+                        System.out.println("\nRespon ❝si❞ o ❝no❞");
+                    }
+                } while (!answer.equalsIgnoreCase("si") && !answer.equalsIgnoreCase("s") && !answer.equalsIgnoreCase("no") && !answer.equalsIgnoreCase("n"));
 
-                if (answer.equalsIgnoreCase("si")) return false;
+                if (answer.equalsIgnoreCase("si") || answer.equalsIgnoreCase("s")) {
+                    return false;
+                }
             } catch (IllegalArgumentException e) {
                 System.out.println("\nRespon ❝si❞ o ❝no❞");
             }
@@ -270,18 +275,30 @@ public class Main {
         manager.filterMovies(sc.nextLine()).forEach(System.out::println);
     }
 
-    public static void manageFriendRequests(Scanner sc,MovieRecomendationManager manager){
-        System.out.println(manager.getCurrentUser().getUsername());
-        System.out.println("1. Acceptar sol·licitud d'amistad");
-        System.out.println("2. Sortir");
+    public static void manageFriendRequests(Scanner sc, MovieRecomendationManager manager) {
+        int request = manager.getCurrentUser().getPendingFR().size();
+
+        if (request == 0) {
+            System.out.println("\nNo tens solicituts d'amistat\n");
+            return;
+        } else if (request > 1) {
+            System.out.println("Tens " + request + " solicitud d'amistat " + manager.getCurrentUser().getPendingFR());
+        } else {
+            System.out.println("Tens " + request + " solicituts d'amistat:");
+            System.out.println(manager.getCurrentUser().getPendingFR());
+        }
+
+        System.out.println("\n1. Acceptar sol·licitud d'amistad");
+        System.out.println("2. Tornar enrere");
+
         int choice = sc.nextInt();
         sc.nextLine();
-        switch (choice){
+        switch (choice) {
             case 1:
-                System.out.println("Quina petició vols acceptar?");
+                System.out.print("Indica la petició a acceptar: ");
                 int friendToAdd = sc.nextInt();
                 sc.nextLine();
-                manager.acceptFriendRequest(manager.getCurrentUser().getPendingFR().get(friendToAdd-1));
+                manager.acceptFriendRequest(manager.getCurrentUser().getPendingFR().get(friendToAdd - 1));
                 break;
 
             case 2:
@@ -301,28 +318,28 @@ public class Main {
             if (foundUser.getUsername().equals(manager.getCurrentUser().getUsername())) {
                 System.out.println("\nNo es pot enviar sol·licitud d'amistat a si mateix");
             } else {
-                if (manager.areTheyFriends(manager.getCurrentUser(),foundUser)){
+                if (manager.areTheyFriends(manager.getCurrentUser(), foundUser)) {
                     System.out.print("Vols veure el perfil de " + foundUser.getUsername() + "?");
                     String answer = sc.nextLine();
                     if (answer.equalsIgnoreCase("si")) {
                         displayProfile(foundUser);
                     }
                 } else {
-                    System.out.print("Vols afegir a " + foundUser.getUsername() +" com a amic? ");
+                    System.out.print("Vols afegir a " + foundUser.getUsername() + " com a amic? ");
                     String answer = sc.nextLine();
                     if (answer.equalsIgnoreCase("si")) {
-                        manager.addFriend(manager.getCurrentUser(),foundUser);
+                        manager.addFriend(manager.getCurrentUser(), foundUser);
                         System.out.println("Sol·licitud d'amistat enviada");
                     }
                 }
             }
         } catch (NullPointerException e) {
-            System.out.println("\nIniciï sessió per demanar sol·licituds d'amistat");;
+            System.out.println("\nIniciï sessió per demanar sol·licituds d'amistat");
         }
         System.out.println();
     }
 
-    public static void displayProfile(User u){
+    public static void displayProfile(User u) {
         System.out.println(u);
     }
 

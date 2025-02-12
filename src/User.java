@@ -1,13 +1,13 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class User extends Person{
+public class User extends Person {
     private String username;
     private String mail;
     private String password;
     private Movie favouriteMovie;
-    private ArrayList<User>pendingFR;
-    private ArrayList<User>friends;
+    private ArrayList<User> pendingFR;
+    private ArrayList<User> friends;
 
     public User(int id, String name, LocalDate dateOfBirth, String nationality, String username, String mail, String password) {
         super(id, name, dateOfBirth, nationality);
@@ -56,11 +56,11 @@ public class User extends Person{
         this.password = password;
     }
 
-    public Movie getFavouriteMovie(){
+    public Movie getFavouriteMovie() {
         return favouriteMovie;
     }
 
-    public void setFavouriteMovie(Movie m){
+    public void setFavouriteMovie(Movie m) {
         this.favouriteMovie = m;
     }
 
@@ -72,7 +72,7 @@ public class User extends Person{
         this.pendingFR = pendingFR;
     }
 
-    public void addPendingFriend(User u){
+    public void addPendingFriend(User u) {
         pendingFR.add(u);
     }
 
@@ -126,7 +126,6 @@ public class User extends Person{
 
     @Override
     public String toString() {
-        return "username='" + username + '\'' +
-                ", mail='" + mail + '\'';
+        return username;
     }
 }

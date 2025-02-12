@@ -44,10 +44,10 @@ public class MovieRecomendationManager {
         Director stanleyKubrick = new Director(7, "Stanley Kubrick", LocalDate.of(1928, 7, 26), "U.S.");
         Director davidFrankel = new Director(1, "David Frankel", LocalDate.of(1959, 4, 2), "American");
 
-        return Set.of(christopherNolan,francisFordCoppola,quentinTarantino,martinScorsese,toddPhillips,jonathanDemme,alfredHitchcock,stanleyKubrick, davidFrankel);
+        return Set.of(christopherNolan, francisFordCoppola, quentinTarantino, martinScorsese, toddPhillips, jonathanDemme, alfredHitchcock, stanleyKubrick, davidFrankel);
     }
 
-    private void addDefaultDirectors(Set<Director>dir){
+    private void addDefaultDirectors(Set<Director> dir) {
         directors.addAll(dir);
     }
 
@@ -95,23 +95,24 @@ public class MovieRecomendationManager {
         Actor stanleyTucci = new Actor(40, "Stanley Tucci", LocalDate.of(1960, 11, 11), "U.S.");
 
 
-        return Set.of(leonardoDiCaprio, josephGordonLevitt,kenWatanabe,marlonBrando,alPacino,jamesCaan,robertDuvall,johnTravolta,samuelLJackson,umaThurman,bruceWillis,joaquinPhoenix,robertDeNiro,
-                zazieBeetz,jamieFoxx,christophWaltz,kerryWashington,waltonGoggins,jodieFoster,cybillShepherd, harveyKeitel,anthonyHopkins, scottGlenn, tedLevine, rayLiotta,joePesci,
-                lorraineBracco,matthewMcConaughey,anneHathaway,michaelCaine, lilyGladstone,anthonyPerkins,janetLeigh,veraMiles,johnGavin,tomCruise,nicoleKidman,sydneyPollack, merylStreep,
+        return Set.of(leonardoDiCaprio, josephGordonLevitt, kenWatanabe, marlonBrando, alPacino, jamesCaan, robertDuvall, johnTravolta, samuelLJackson, umaThurman, bruceWillis, joaquinPhoenix, robertDeNiro,
+                zazieBeetz, jamieFoxx, christophWaltz, kerryWashington, waltonGoggins, jodieFoster, cybillShepherd, harveyKeitel, anthonyHopkins, scottGlenn, tedLevine, rayLiotta, joePesci,
+                lorraineBracco, matthewMcConaughey, anneHathaway, michaelCaine, lilyGladstone, anthonyPerkins, janetLeigh, veraMiles, johnGavin, tomCruise, nicoleKidman, sydneyPollack, merylStreep,
                 emilyBlunt, stanleyTucci);
     }
-    private void addDefaultActors(Set<Actor>act){
+
+    private void addDefaultActors(Set<Actor> act) {
         actors.addAll(act);
     }
 
-    public Director findDirectorByName(String name){
+    public Director findDirectorByName(String name) {
         return directors.stream()
                 .filter(director -> director.getName().equalsIgnoreCase(name))
                 .findAny()
                 .orElseThrow(() -> new NoSuchElementException("Director no existent: " + name));
     }
 
-    public Actor findActorByName(String name){
+    public Actor findActorByName(String name) {
         return actors.stream()
                 .filter(actor -> actor.getName().equalsIgnoreCase(name))
                 .findAny()
@@ -216,11 +217,11 @@ public class MovieRecomendationManager {
         this.actors = actors;
     }
 
-    public User getCurrentUser(){
+    public User getCurrentUser() {
         return currentUser;
     }
 
-    public void setCurrentUser(User u){
+    public void setCurrentUser(User u) {
         this.currentUser = u;
     }
 
@@ -245,10 +246,10 @@ public class MovieRecomendationManager {
         users.add(user);
     }
 
-    public User findUserByUsername(String name){
-        for (User u: users){
-            if (u.getUsername().equalsIgnoreCase(name)){
-                return  u;
+    public User findUserByUsername(String name) {
+        for (User u : users) {
+            if (u.getUsername().equalsIgnoreCase(name)) {
+                return u;
             }
         }
         System.out.println("\nUsuari no trobat");
@@ -262,7 +263,8 @@ public class MovieRecomendationManager {
     public boolean checkPassword(String checkUser, String checkPasswd) {
         return users.stream()
                 .filter(user -> user.getUsername().equals(checkUser))
-                .anyMatch(user -> user.getPassword().equals(checkPasswd));    }
+                .anyMatch(user -> user.getPassword().equals(checkPasswd));
+    }
 
 
     public void showAllUsers() {
@@ -287,24 +289,24 @@ public class MovieRecomendationManager {
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
-    public void listMovies(){
+    public void listMovies() {
         movies.forEach(movie -> System.out.println("  - " + movie.getTitle() + " (" + movie.getYear() + ")"));
         System.out.println();
     }
 
-    public void addFriend(User currentUser, User foundUser){
+    public void addFriend(User currentUser, User foundUser) {
         foundUser.addPendingFriend(currentUser);
     }
 
-    public boolean areTheyFriends(User currentUser, User foundUser){
+    public boolean areTheyFriends(User currentUser, User foundUser) {
         return currentUser.getFriends().contains(foundUser) && foundUser.getFriends().contains(currentUser);
     }
 
-    public void displayFoundProfile(User u){
+    public void displayFoundProfile(User u) {
         System.out.println(u.getUsername());
     }
 
-    public void acceptFriendRequest(User acceptedUser){
+    public void acceptFriendRequest(User acceptedUser) {
         currentUser.getPendingFR().remove(acceptedUser);
         currentUser.getFriends().add(acceptedUser);
     }
