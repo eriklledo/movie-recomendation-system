@@ -1,6 +1,7 @@
 import java.time.Year;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Movie {
     private int id;
@@ -79,13 +80,14 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", directors=" + directors +
-                ", actors=" + actors +
-                ", genre=" + genre +
-                ", year=" + year +
-                '}';
+        return "Títol: " + title + "\n" +
+                "Gènere: " + String.join(", ", genre) + "\n" +
+                "Director(s): " + directors.stream()
+                .map(Director::getName)
+                .collect(Collectors.joining(", ")) + "\n" +
+                "Actors Principals: " + actors.stream()
+                .map(Actor::getName)
+                .collect(Collectors.joining(", ")) + "\n" +
+                "Any: " + year + "\n";
     }
 }

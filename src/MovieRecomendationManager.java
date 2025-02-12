@@ -23,6 +23,8 @@ public class MovieRecomendationManager {
         users = new HashSet<>();
         directors = new HashSet<>();
         actors = new HashSet<>();
+        addDefaultDirectors(createDefaultDirectors());
+        addDefaultActors(createDefaultActors());
         addDefaultMovies();
     }
 
@@ -35,7 +37,9 @@ public class MovieRecomendationManager {
         Director jonathanDemme = new Director(5, "Jonathan Demme", LocalDate.of(1944, 2, 22), "U.S.");
         Director alfredHitchcock = new Director(6, "Alfred Hitchcock", LocalDate.of(1899, 8, 13), "British");
         Director stanleyKubrick = new Director(7, "Stanley Kubrick", LocalDate.of(1928, 7, 26), "U.S.");
-        return Set.of(christopherNolan,francisFordCoppola,quentinTarantino,martinScorsese,toddPhillips,jonathanDemme,alfredHitchcock,stanleyKubrick);
+        Director davidFrankel = new Director(1, "David Frankel", LocalDate.of(1959, 4, 2), "American");
+
+        return Set.of(christopherNolan,francisFordCoppola,quentinTarantino,martinScorsese,toddPhillips,jonathanDemme,alfredHitchcock,stanleyKubrick, davidFrankel);
     }
 
     private void addDefaultDirectors(Set<Director>dir){
@@ -81,10 +85,15 @@ public class MovieRecomendationManager {
         Actor tomCruise = new Actor(35, "Tom Cruise", LocalDate.of(1962, 7, 3), "U.S.");
         Actor nicoleKidman = new Actor(36, "Nicole Kidman", LocalDate.of(1967, 6, 20), "U.S.");
         Actor sydneyPollack = new Actor(37, "Sydney Pollack", LocalDate.of(1934, 7, 1), "U.S.");
+        Actor merylStreep = new Actor(38, "Meryl Streep", LocalDate.of(1949, 6, 22), "U.S.");
+        Actor emilyBlunt = new Actor(39, "Emily Blunt", LocalDate.of(1983, 2, 23), "British");
+        Actor stanleyTucci = new Actor(40, "Stanley Tucci", LocalDate.of(1960, 11, 11), "U.S.");
+
 
         return Set.of(leonardoDiCaprio, josephGordonLevitt,kenWatanabe,marlonBrando,alPacino,jamesCaan,robertDuvall,johnTravolta,samuelLJackson,umaThurman,bruceWillis,joaquinPhoenix,robertDeNiro,
                 zazieBeetz,jamieFoxx,christophWaltz,kerryWashington,waltonGoggins,jodieFoster,cybillShepherd, harveyKeitel,anthonyHopkins, scottGlenn, tedLevine, rayLiotta,joePesci,
-                lorraineBracco,matthewMcConaughey,anneHathaway,michaelCaine, lilyGladstone,anthonyPerkins,janetLeigh,veraMiles,johnGavin,tomCruise,nicoleKidman,sydneyPollack);
+                lorraineBracco,matthewMcConaughey,anneHathaway,michaelCaine, lilyGladstone,anthonyPerkins,janetLeigh,veraMiles,johnGavin,tomCruise,nicoleKidman,sydneyPollack, merylStreep,
+                emilyBlunt, stanleyTucci);
     }
     private void addDefaultActors(Set<Actor>act){
         actors.addAll(act);
@@ -109,7 +118,7 @@ public class MovieRecomendationManager {
 
         movies.add(new Movie(Year.of(2010), "Inception", 1,
                 Set.of(findDirectorByName("Christopher Nolan")),
-                Set.of(findActorByName("lenoardo dicaprio"), findActorByName("josephGordonLevitt"), findActorByName("kenWatanabe")),
+                Set.of(findActorByName("Leonardo DiCaprio"), findActorByName("Joseph Gordon-Levitt"), findActorByName("Ken Watanabe")),
                 Set.of("Action", "Adventure", "Science Fiction")
         ));
 
