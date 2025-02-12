@@ -1,4 +1,3 @@
-import javax.swing.text.html.Option;
 import java.time.Year;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,7 +15,6 @@ public class MovieRecomendationManager {
         this.actors = actors;
         this.users = users;
     }
-
 
     public MovieRecomendationManager() {
         movies = new HashSet<>();
@@ -89,12 +87,12 @@ public class MovieRecomendationManager {
         Actor emilyBlunt = new Actor(39, "Emily Blunt", LocalDate.of(1983, 2, 23), "British");
         Actor stanleyTucci = new Actor(40, "Stanley Tucci", LocalDate.of(1960, 11, 11), "U.S.");
 
-
         return Set.of(leonardoDiCaprio, josephGordonLevitt,kenWatanabe,marlonBrando,alPacino,jamesCaan,robertDuvall,johnTravolta,samuelLJackson,umaThurman,bruceWillis,joaquinPhoenix,robertDeNiro,
                 zazieBeetz,jamieFoxx,christophWaltz,kerryWashington,waltonGoggins,jodieFoster,cybillShepherd, harveyKeitel,anthonyHopkins, scottGlenn, tedLevine, rayLiotta,joePesci,
                 lorraineBracco,matthewMcConaughey,anneHathaway,michaelCaine, lilyGladstone,anthonyPerkins,janetLeigh,veraMiles,johnGavin,tomCruise,nicoleKidman,sydneyPollack, merylStreep,
                 emilyBlunt, stanleyTucci);
     }
+
     private void addDefaultActors(Set<Actor>act){
         actors.addAll(act);
     }
@@ -113,9 +111,7 @@ public class MovieRecomendationManager {
                 .orElseThrow(() -> new NoSuchElementException("Actor no existent: " + name));
     }
 
-
     private void addDefaultMovies() {
-
         movies.add(new Movie(Year.of(2010), "Inception", 1,
                 Set.of(findDirectorByName("Christopher Nolan")),
                 Set.of(findActorByName("Leonardo DiCaprio"), findActorByName("Joseph Gordon-Levitt"), findActorByName("Ken Watanabe")),
@@ -204,7 +200,6 @@ public class MovieRecomendationManager {
         this.movies = movies;
     }
 
-
     public Set<User> getUsers() {
         return users;
     }
@@ -237,8 +232,8 @@ public class MovieRecomendationManager {
     public boolean checkPassword(String checkUser, String checkPasswd) {
         return users.stream()
                 .filter(user -> user.getUsername().equals(checkUser))
-                .anyMatch(user -> user.getPassword().equals(checkPasswd));    }
-
+                .anyMatch(user -> user.getPassword().equals(checkPasswd));
+    }
 
     public void showAllUsers() {
         for (User user : users) {
@@ -249,7 +244,6 @@ public class MovieRecomendationManager {
     public void removeUserById(int id) {
         users.removeIf(user -> user.getId() == id);
     }
-
 
     public LinkedHashSet<Movie> filterMovies(String query) {
         query = query.toLowerCase();
@@ -264,7 +258,6 @@ public class MovieRecomendationManager {
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
-
     public void listMovies(){
         for (Movie m: movies){
             System.out.println(m);
@@ -272,16 +265,11 @@ public class MovieRecomendationManager {
         }
     }
 
-
-
     @Override
     public String toString() {
         return "RecomenderManager{" +
                 "movies=" + movies +
                 ", users=" + users +
                 '}';
-
-
     }
-
 }

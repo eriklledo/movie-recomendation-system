@@ -1,13 +1,10 @@
 //package Iteracio1;
 //
 //import java.util.*;
-//import java.util.regex.Matcher;
-//import java.util.regex.Pattern;
 //
 //public class Iteracio1 {
 //    public static void main(String[] args) {
 //        Scanner sc = new Scanner(System.in);
-//
 //
 //        boolean loggedIn = false;
 //        String createUsername = "";
@@ -17,7 +14,7 @@
 //        String username = "";
 //        String favMovie = "";
 //        String back = "";
-
+//
 //        ArrayList<String[]> movies = new ArrayList<>();
 //        movies.add(new String[]{"Inception", "Action, Adventure, Science Fiction", "Christopher Nolan", "Leonardo DiCaprio, Joseph Gordon-Levitt, Ken Watanabe", "2010"});
 //        movies.add(new String[]{"The Godfather", "Crime, Drama", "Francis Ford Coppola", "Marlon Brando, Al Pacino, James Caan, Robert Duvall", "1972"});
@@ -32,7 +29,7 @@
 //        movies.add(new String[]{"Killers of the Flower Moon", "History, Crime, Drama", "Martin Scorsese", "Leonardo DiCaprio, Robert De Niro, Lily Gladstone", "2023"});
 //        movies.add(new String[]{"Psycho", "Mystery, Thriller, Horror", "Alfreed Hitchcock", "Anthony Perkins, Janet Leigh, Vera Miles, John Gavin", "1960"});
 //        movies.add(new String[]{"Eyes Wide Shut", "Thriller, Drama, Mystery", "Stanley Kubrick", "Tom Cruise, Nicole Kidman, Sydney Pollack", "1999"});
-
+//
 //        while (!loggedIn) {
 //
 //            boolean opcioValida = false;
@@ -50,7 +47,7 @@
 //
 //                    if (opcioMenu < 1 || opcioMenu > 3) {
 //                        System.out.println("Ha d'escollir un número del 1 al 3");
-//                    } else if (opcioMenu >= 1 && opcioMenu <= 3) {
+//                    } else {
 //                        opcioValida = true;
 //                    }
 //                } catch (InputMismatchException e) {
@@ -126,7 +123,7 @@
 //
 //                                if (opcioPelis < 1 || opcioPelis > 5) {
 //                                    System.out.println("Ha d'escollir un número del 1 al 5");
-//                                } else if (opcioPelis >= 1 && opcioPelis <= 5) {
+//                                } else {
 //                                    opcioValida2 = true;
 //                                }
 //                            } catch (InputMismatchException e) {
@@ -201,13 +198,9 @@
 //                                        System.out.println("Any: " + movie[4]);
 //                                        System.out.println();
 //                                        found = true;
-//                                                      }
 //                                    }
-//                                    if (!found) System.out.println("Ho sentim, no s'ha trobat aquest titol.\n");
-
-//
-//
-//
+//                                }
+//                                if (!found) System.out.println("Ho sentim, no s'ha trobat aquest titol.\n");
 //
 //                                while (favMovie.isEmpty()) ;
 //                                System.out.println("\nBenvingut al teu perfil\n");
