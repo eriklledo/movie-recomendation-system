@@ -1,22 +1,23 @@
 import java.time.LocalDate;
-import java.time.Year;
-import java.util.Date;
-import java.util.Locale;
 
 public class Person {
-    private int id;
+    private int id = 10;
     private String name;
     private LocalDate dateOfBirth;
     private String nationality;
+
+    public Person() {
+        id = this.id + 1;
+        name = "Default";
+        dateOfBirth = LocalDate.of(2000,1,1);
+        nationality = "Select";
+    }
 
     public Person(int id, String name, LocalDate dateOfBirth, String nationality) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.nationality = nationality;
-    }
-
-    public Person() {
     }
 
     public int getId() {
