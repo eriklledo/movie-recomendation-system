@@ -266,7 +266,6 @@ public class MovieRecomendationManager {
                 .anyMatch(user -> user.getPassword().equals(checkPasswd));
     }
 
-
     public void showAllUsers() {
         for (User user : users) {
             System.out.println(user);

@@ -1,5 +1,4 @@
 import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -59,7 +58,7 @@ public class Main {
                 switch (choice) {
                     case 1:
                         createUser(sc, manager);
-                        enter(sc);
+                        enterToContinue(sc);
                         break;
                     case 2:
                         if (login(sc, manager)) return true;
@@ -101,28 +100,28 @@ public class Main {
                 switch (choice) {
                     case 1:
                         manager.listMovies();
-                        enter(sc);
+                        enterToContinue(sc);
                         break;
                     case 2:
                         movieSearcher(sc, manager);
-                        enter(sc);
+                        enterToContinue(sc);
                         break;
                     case 3:
                         System.out.println("\nHo sentim, aquesta funció encara no està disponible\n");
-                        enter(sc);
+                        enterToContinue(sc);
                         break;
                     case 4:
                         // TODO
                         System.out.println();
-                        enter(sc);
+                        enterToContinue(sc);
                         break;
                     case 5:
                         profileSearcher(sc, manager);
-                        enter(sc);
+                        enterToContinue(sc);
                         break;
                     case 6:
                         manageFriendRequests(sc, manager);
-                        enter(sc);
+                        enterToContinue(sc);
                         break;
                     case 7:
                         System.out.println("\nTancant sessió...\n");
@@ -276,21 +275,13 @@ public class Main {
     }
 
     public static void manageFriendRequests(Scanner sc, MovieRecomendationManager manager) {
-        int request = manager.getCurrentUser().getPendingFR().size();
-
-        if (request == 0) {
-            System.out.println("\nNo tens solicituts d'amistat\n");
-            return;
-        } else if (request > 1) {
-            System.out.println("Tens " + request + " solicitud d'amistat " + manager.getCurrentUser().getPendingFR());
-        } else {
-            System.out.println("Tens " + request + " solicituts d'amistat:");
-            System.out.println(manager.getCurrentUser().getPendingFR());
-        }
+        System.out.println("\nTens " + manager.getCurrentUser().getPendingFR().size() + " solicituts d'amistat:");
+        System.out.println(manager.getCurrentUser().getPendingFR());
 
         System.out.println("\n1. Acceptar sol·licitud d'amistad");
         System.out.println("2. Tornar enrere");
 
+        System.out.println("Triï una opció: ");
         int choice = sc.nextInt();
         sc.nextLine();
         switch (choice) {
@@ -319,7 +310,7 @@ public class Main {
                 System.out.println("\nNo es pot enviar sol·licitud d'amistat a si mateix");
             } else {
                 if (manager.areTheyFriends(manager.getCurrentUser(), foundUser)) {
-                    System.out.print("Vols veure el perfil de " + foundUser.getUsername() + "?");
+                    System.out.print("Vols veure el perfil de " + foundUser.getUsername() + "? ");
                     String answer = sc.nextLine();
                     if (answer.equalsIgnoreCase("si")) {
                         displayProfile(foundUser);
@@ -343,8 +334,8 @@ public class Main {
         System.out.println(u);
     }
 
-    public static void enter(Scanner sc) {
-        System.out.print("Prem enter per continuar.\n");
+    public static void enterToContinue(Scanner sc) {
+        System.out.print("Prem enterToContinue per continuar.\n");
         sc.nextLine();
     }
 }
