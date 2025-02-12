@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -254,12 +256,11 @@ public class Main {
             }
         }
     }
+
     public static void movieSearcher(Scanner sc, MovieRecomendationManager manager) {
-        System.out.println("Quina peli vols buscar?");
+        System.out.print("Cerca una pel·lícula: ");
         manager.filterMovies(sc.nextLine()).forEach(System.out::println);
     }
-
-
 
     public static void manageFriendRequests(Scanner sc,MovieRecomendationManager manager){
         System.out.println(manager.getCurrentUser().getPendingFR());

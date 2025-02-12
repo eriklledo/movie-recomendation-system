@@ -290,7 +290,6 @@ public class MovieRecomendationManager {
         users.removeIf(user -> user.getId() == id);
     }
 
-
     public LinkedHashSet<Movie> filterMovies(String query) {
         query = query.toLowerCase();
 
@@ -304,11 +303,8 @@ public class MovieRecomendationManager {
                 .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
-
     public void listMovies(){
-        for (Movie m: movies){
-            System.out.println(m);
-        }
+        movies.forEach(movie -> System.out.println("  - " + movie.getTitle() + " (" + movie.getYear() + ")"));
     }
 
     public void addFriend(User currentUser, User foundUser){
@@ -327,9 +323,6 @@ public class MovieRecomendationManager {
         currentUser.getPendingFR().remove(acceptedUser);
         currentUser.getFriends().add(acceptedUser);
     }
-
-
-
 
     @Override
     public String toString() {
