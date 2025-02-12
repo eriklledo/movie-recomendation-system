@@ -1,6 +1,4 @@
-import java.awt.event.MouseWheelEvent;
 import java.util.InputMismatchException;
-import java.util.LinkedHashSet;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -107,6 +105,7 @@ public class Main {
                         break;
                     case 3:
                         System.out.println("Ho sentim, aquesta funció encara no està disponible");
+                        break;
                     case 4:
                         // TODO
                     case 5:
@@ -201,7 +200,7 @@ public class Main {
                 }
 
                 System.out.print("Confirmi la contrasenya: ");
-                if (!password.equals(sc.next())) {
+                if (!password.equals(sc.nextLine())) {
                     System.out.println("Les contrasenyes no coincideixen\n");
                     continue;
                 }
