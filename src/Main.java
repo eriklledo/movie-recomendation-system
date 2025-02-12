@@ -1,4 +1,5 @@
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,7 +30,7 @@ public class Main {
                 return;
             }
 
-            boolean exit = showMovieMenu(sc);
+            boolean exit = showMovieMenu(sc, manager);
             if (exit) {
                 System.out.println("\nSortint del programa...");
                 System.out.println("Fins aviat!");
@@ -58,11 +59,13 @@ public class Main {
                 switch (choice) {
                     case 1:
                         createUser(sc, manager);
+                        enter(sc);
                         break;
                     case 2:
                         if (login(sc, manager)) return true;
                         break;
                     case 3:
+                        System.out.println();
                         return true;
                     case 0:
                         return false;
@@ -76,18 +79,19 @@ public class Main {
         }
     }
 
-    private boolean showMovieMenu(Scanner sc) {
+    private boolean showMovieMenu(Scanner sc, MovieRecomendationManager manager) {
         while (true) {
             try {
-                System.out.println("""
-                        
-                        PEL·LÍCULES DISPONIBLES
+                System.out.println("""                        
+                        RECOMANADOR DE PEL·LÍCULES
                         
                         1. Llistat de pel·lícules disponibles
                         2. Cercador de pel·lícules
                         3. Recomanador de pel·lícules (no disponible)
                         4. El meu Perfil
-                        5. Tancar sessió
+                        5. Buscar perfil
+                        6. Acceptar peticions d'amistat
+                        7. Tancar sessió
                         0. Sortir del programa
                         """);
                 System.out.print("Triï una opció: ");
@@ -96,18 +100,31 @@ public class Main {
                 sc.nextLine();
                 switch (choice) {
                     case 1:
-                        // TODO
+                        manager.listMovies();
+                        enter(sc);
                         break;
                     case 2:
-                        // TODO
+                        movieSearcher(sc, manager);
+                        enter(sc);
                         break;
                     case 3:
-                        System.out.println("Ho sentim, aquesta funció encara no està disponible");
+                        System.out.println("\nHo sentim, aquesta funció encara no està disponible\n");
+                        enter(sc);
                         break;
                     case 4:
                         // TODO
+                        System.out.println();
+                        enter(sc);
                         break;
                     case 5:
+                        profileSearcher(sc, manager);
+                        enter(sc);
+                        break;
+                    case 6:
+                        manageFriendRequests(sc, manager);
+                        enter(sc);
+                        break;
+                    case 7:
                         System.out.println("\nTancant sessió...\n");
                         return false;
                     case 0:
@@ -193,7 +210,7 @@ public class Main {
                 }
 
                 System.out.print("Confirmi la contrasenya: ");
-                if (!password.equals(sc.next())) {
+                if (!password.equals(sc.nextLine())) {
                     System.out.println("Les contrasenyes no coincideixen\n");
                     continue;
                 }
@@ -228,7 +245,8 @@ public class Main {
                 boolean passwordCorrect = manager.checkPassword(checkUser, checkPasswd);
 
                 if (userExists && passwordCorrect) {
-                    System.out.println("\nS'ha iniciat sessió correctament");
+                    manager.setCurrentUser(manager.findUserByUsername(checkUser));
+                    System.out.println("\nS'ha iniciat sessió correctament\n");
                     return true;
                 }
 
@@ -236,14 +254,97 @@ public class Main {
 
                 String answer;
                 do {
-                    System.out.print("Vols tornar enrere per registrar-te: ");
-                    answer = sc.next().toLowerCase();
-                } while (!answer.equals("si") && !answer.equals("no"));
+                    System.out.print("Vols tornar enrere i registrar-te? ");
+                    answer = sc.nextLine().toLowerCase();
+                    if (!answer.equalsIgnoreCase("si") && !answer.equalsIgnoreCase("s") && !answer.equalsIgnoreCase("no") && !answer.equalsIgnoreCase("n")) {
+                        System.out.println("\nRespon ❝si❞ o ❝no❞");
+                    }
+                } while (!answer.equalsIgnoreCase("si") && !answer.equalsIgnoreCase("s") && !answer.equalsIgnoreCase("no") && !answer.equalsIgnoreCase("n"));
 
-                if (answer.equals("si")) return false;
+                if (answer.equalsIgnoreCase("si") || answer.equalsIgnoreCase("s")) {
+                    return false;
+                }
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println("\nRespon ❝si❞ o ❝no❞");
             }
         }
+    }
+
+    public static void movieSearcher(Scanner sc, MovieRecomendationManager manager) {
+        System.out.print("\nCerca una pel·lícula: ");
+        manager.filterMovies(sc.nextLine()).forEach(System.out::println);
+    }
+
+    public static void manageFriendRequests(Scanner sc, MovieRecomendationManager manager) {
+        int request = manager.getCurrentUser().getPendingFR().size();
+
+        if (request == 0) {
+            System.out.println("\nNo tens solicituts d'amistat\n");
+            return;
+        } else if (request > 1) {
+            System.out.println("Tens " + request + " solicitud d'amistat " + manager.getCurrentUser().getPendingFR());
+        } else {
+            System.out.println("Tens " + request + " solicituts d'amistat:");
+            System.out.println(manager.getCurrentUser().getPendingFR());
+        }
+
+        System.out.println("\n1. Acceptar sol·licitud d'amistad");
+        System.out.println("2. Tornar enrere");
+
+        int choice = sc.nextInt();
+        sc.nextLine();
+        switch (choice) {
+            case 1:
+                System.out.print("Indica la petició a acceptar: ");
+                int friendToAdd = sc.nextInt();
+                sc.nextLine();
+                manager.acceptFriendRequest(manager.getCurrentUser().getPendingFR().get(friendToAdd - 1));
+                break;
+
+            case 2:
+                break;
+        }
+    }
+
+    public static void profileSearcher(Scanner sc, MovieRecomendationManager manager) {
+        System.out.print("\nCerca un nom d'usuari: ");
+        try {
+            User foundUser = manager.findUserByUsername(sc.nextLine());
+
+            if (foundUser == null) {
+                throw new NullPointerException();
+            }
+
+            if (foundUser.getUsername().equals(manager.getCurrentUser().getUsername())) {
+                System.out.println("\nNo es pot enviar sol·licitud d'amistat a si mateix");
+            } else {
+                if (manager.areTheyFriends(manager.getCurrentUser(), foundUser)) {
+                    System.out.print("Vols veure el perfil de " + foundUser.getUsername() + "?");
+                    String answer = sc.nextLine();
+                    if (answer.equalsIgnoreCase("si")) {
+                        displayProfile(foundUser);
+                    }
+                } else {
+                    System.out.print("Vols afegir a " + foundUser.getUsername() + " com a amic? ");
+                    String answer = sc.nextLine();
+                    if (answer.equalsIgnoreCase("si")) {
+                        manager.addFriend(manager.getCurrentUser(), foundUser);
+                        System.out.println("Sol·licitud d'amistat enviada");
+                    }
+                }
+            }
+        } catch (NullPointerException e) {
+            System.out.println("\nIniciï sessió per demanar sol·licituds d'amistat");
+        }
+        System.out.println();
+    }
+
+    public static void displayProfile(User u) {
+        System.out.println(u);
+    }
+
+    public static void enter(Scanner sc) {
+        System.out.print("Prem enter per continuar.\n");
+        sc.nextLine();
     }
 }

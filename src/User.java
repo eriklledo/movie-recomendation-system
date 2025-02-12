@@ -1,21 +1,35 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class User extends Person{
+public class User extends Person {
     private String username;
     private String mail;
     private String password;
+    private Movie favouriteMovie;
+    private ArrayList<User> pendingFR;
+    private ArrayList<User> friends;
 
     public User(int id, String name, LocalDate dateOfBirth, String nationality, String username, String mail, String password) {
         super(id, name, dateOfBirth, nationality);
         this.username = username;
         this.mail = mail;
         this.password = password;
+        favouriteMovie = null;
+        pendingFR = new ArrayList<>();
+        friends = new ArrayList<>();
     }
 
     public User(String username, String mail, String password) {
         this.username = username;
         this.mail = mail;
         this.password = password;
+        favouriteMovie = null;
+        pendingFR = new ArrayList<>();
+        friends = new ArrayList<>();
+    }
+
+    public User(int id, String name, LocalDate dateOfBirth, String nationality) {
+        super(id, name, dateOfBirth, nationality);
     }
 
     public String getUsername() {
@@ -42,8 +56,32 @@ public class User extends Person{
         this.password = password;
     }
 
-    public User(int id, String name, LocalDate dateOfBirth, String nationality) {
-        super(id, name, dateOfBirth, nationality);
+    public Movie getFavouriteMovie() {
+        return favouriteMovie;
+    }
+
+    public void setFavouriteMovie(Movie m) {
+        this.favouriteMovie = m;
+    }
+
+    public ArrayList<User> getPendingFR() {
+        return pendingFR;
+    }
+
+    public void setPendingFR(ArrayList<User> pendingFR) {
+        this.pendingFR = pendingFR;
+    }
+
+    public void addPendingFriend(User u) {
+        pendingFR.add(u);
+    }
+
+    public ArrayList<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(ArrayList<User> friends) {
+        this.friends = friends;
     }
 
     @Override
@@ -88,11 +126,6 @@ public class User extends Person{
 
     @Override
     public String toString() {
-        return super.toString() +
-                "User{" +
-                "username='" + username + '\'' +
-                ", mail='" + mail + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return username;
     }
 }
