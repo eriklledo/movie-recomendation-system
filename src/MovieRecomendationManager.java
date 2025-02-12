@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.*;
 
 public class MovieRecomendationManager {
@@ -7,6 +8,11 @@ public class MovieRecomendationManager {
     public MovieRecomendationManager() {
         this.movies = new HashSet<>();
         this.users = new HashSet<>();
+        addUser(new User("admin", "bustiad@gmail.com", "@dm1n"));
+        addUser(new User(1, "Èrik", LocalDate.of(2004, 10, 15), "Spanish", "erik", "sonwerik@mail.com", "miau"));
+        addUser(new User(2, "Jordi", LocalDate.of(2000, 1, 1), "Spanish", "jordi", "jordi@mail.com", "password"));
+        addUser(new User(3, "Alam", LocalDate.of(2006, 1, 1), "Spanish", "alam", "alam@mail.com", "contraseña"));
+        addUser(new User(4, "Joan", LocalDate.of(2006, 1, 1), "Spanish", "joan", "joan@mail.com", "contrasenya"));
     }
 
     public Set<Movie> getMovies() {
@@ -31,32 +37,28 @@ public class MovieRecomendationManager {
     }
 
     public void searchUserbyUsername(String userName) {
-        for (User user : users) {
-            if (user.getUsername().equals(userName)) {
-                System.out.println(user);
-            } else if (user.getMail().equals(userName)) {
-                System.out.println(user);
-
-            } else {
-                System.out.println("Usuari no trobat.");
-            }
-        }
+        users.stream()
+                .filter(user -> user.getUsername().equals(userName))
+                .findFirst()
+                .ifPresentOrElse(System.out::println,
+                        () -> System.out.println("Usuari no trobat"));
     }
 
     public boolean checkUser(String checkUser) {
-        return users.stream().anyMatch(user -> user.getUsername().equals(checkUser));
+        return users.stream()
+                .anyMatch(user -> user.getUsername().equals(checkUser) ||
+                        user.getMail().equals(checkUser));
     }
 
     public boolean checkPassword(String checkUser, String checkPasswd) {
         return users.stream()
-                .filter(user -> user.getUsername().equals(checkUser))
-                .anyMatch(user -> user.getPassword().equals(checkPasswd));    }
-
+                .filter(user -> user.getUsername().equals(checkUser) ||
+                        user.getMail().equals(checkUser))
+                .anyMatch(user -> user.getPassword().equals(checkPasswd));
+    }
 
     public void showAllUsers() {
-        for (User user : users) {
-            System.out.println(user);
-        }
+        users.forEach(System.out::println);
     }
 
     public void removeUserById(int id) {

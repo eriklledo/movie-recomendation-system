@@ -7,49 +7,55 @@ public class Main {
     public static void main(String[] args) {
         MovieRecomendationManager mRM = new MovieRecomendationManager();
         Scanner sc = new Scanner(System.in);
-        System.out.println("""
-                
-                RECOMANADOR DE PEL·LÍCULES
-                """);
 
-        boolean login = false;
-        while (!login) {
-            System.out.println("""
+        System.out.print("""
+            
+            --------------------------
+            RECOMANADOR DE PEL·LÍCULES
+            --------------------------
+            """);
+
+        boolean exit = false;
+
+        while (!exit) {
+            boolean login = false;
+
+            do {
+                System.out.print("""
                     
                     INICI DE SESSIÓ
                     
                     1. Nou usuari
                     2. Iniciar sessió
                     3. Entra com a convidat
-                    0. Sortir de programa
+                    0. Sortir del programa
                     
                     """);
-            System.out.print("Triï una opció: ");
-            int option = sc.nextInt();
-            sc.nextLine();
+                System.out.print("Triï una opció: ");
 
-            switch (option) {
-                case 1:
-                    createUser(sc, mRM);
-                    break;
-                case 2:
-                    login(sc, mRM);
-                    System.out.println(login);
-                    break;
-                case 3:
-                    login = true;
-                    break;
-                case 0:
-                    System.exit(0);
-                default:
-                    System.out.println("Opció no vàlida. Torni a intentar-ho.");
-            }
-        }
+                switch (sc.nextInt()) {
+                    case 1:
+                        createUser(sc, mRM);
+                        break;
+                    case 2:
+                        login = login(sc, mRM);
+                        break;
+                    case 3:
+                        login = true;
+                        break;
+                    case 0:
+                        System.out.println("\nFins aviat!");
+                        System.out.println("Sortint del programa...");
+                        exit = true;
+                        break;
+                    default:
+                        System.out.println("\nOpció no vàlida. Torni a intentar-ho.");
+                        break;
+                }
+            } while (!login && !exit);
 
-
-        boolean inMovieMenu = true;
-        while (inMovieMenu) {
-            System.out.println("""
+            while (login) {
+                System.out.println("""
                     
                     PEL·LÍCULES DISPONIBLES
                     
@@ -61,35 +67,35 @@ public class Main {
                     0. Sortir del programa
                     
                     """);
-            System.out.print("Triï una opció: ");
-            int option = sc.nextInt();
-            sc.nextLine();
+                System.out.print("Triï una opció: ");
 
-            switch (option) {
-                case 1:
-                    System.out.println("1");
-                    break;
-
-                case 2:
-                    System.out.println("2");
-                    break;
-                case 4:
-                    System.out.println("Ho sentim, aquesta funció, encara no está disponible");
-                    break;
-                case 3:
-                    System.out.println("4");
-                    break;
-                case 5:
-                    System.out.println("5");
-                    break;
-                case 6:
-                    System.out.println("Tancant sessió...");
-                    inMovieMenu = false;
-                    break;
-                case 0:
-                    System.exit(0);
-                default:
-                    System.out.println("Opció no vàlida. Torni a intentar-ho.");
+                switch (sc.nextInt()) {
+                    case 1:
+                        System.out.println("1");
+                        break;
+                    case 2:
+                        System.out.println("2");
+                        break;
+                    case 3:
+                        System.out.println("Ho sentim, aquesta funció encara no està disponible");
+                        break;
+                    case 4:
+                        System.out.println("4");
+                        break;
+                    case 5:
+                        System.out.println("\nTancant sessió...");
+                        login = false;
+                        break;
+                    case 0:
+                        System.out.println("\nFins aviat!");
+                        System.out.println("Sortint del programa...");
+                        exit = true;
+                        login = false;
+                        break;
+                    default:
+                        System.out.println("Opció no vàlida. Torni a intentar-ho.");
+                        break;
+                }
             }
         }
         sc.close();
@@ -106,31 +112,24 @@ public class Main {
         Pattern securePassword = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
         Matcher search = securePassword.matcher(password);
         return search.matches();
-
-    }
-
-    public static void defaultUsers(MovieRecomendationManager mRM) {
-        User erik = new User(1, "Èrik", LocalDate.of(2004, 10, 15), "Spanish", "sonwerik", "sonwerik@mail.com", "miau");
-        mRM.addUser(erik);
     }
 
     public static void createUser(Scanner sc, MovieRecomendationManager mRM) {
-        String username = "";
-        String email = "";
-        String password = "";
+        String username, email, password;
 
-        while (true) {
-            System.out.print("Introdueixi un nom d'usuari: ");
+        do {
+            System.out.print("\nNom d'usuari: ");
             username = sc.next();
             if (mRM.checkUser(username)) {
                 System.out.println("Aquest nom d'usuari ja existeix. Torni-ho a intentar.");
                 continue;
+            } else {
+                break;
             }
-            break;
-        }
+        } while (true);
 
-        while (true) {
-            System.out.print("Introdueixi el seu correu: ");
+        do {
+            System.out.print("Correu electrònic: ");
             email = sc.next();
 
             if (!MailChecking(email)) {
@@ -140,14 +139,14 @@ public class Main {
 
             String finalEmail = email;
             if (mRM.getUsers().stream().anyMatch(user -> user.getMail().equals(finalEmail))) {
-                System.out.println("Aquest correu electrònic ja està registrat. Torni-ho a intentar.");
-                continue;
+                System.out.println("Aquest correu electrònic ja està registrat. Torni a intentar-ho.");
+            } else {
+                break;
             }
-            break;
-        }
+        } while (true);
 
-        while (true) {
-            System.out.print("Introdueixi una contrasenya: ");
+        do {
+            System.out.print("Contrasenya: ");
             password = sc.next();
 
             if (!PasswordChecking(password)) {
@@ -155,44 +154,41 @@ public class Main {
                 continue;
             }
 
-            System.out.print("Repeteixi la contrasenya: ");
-            String confirmPassword = sc.next();
-
-            if (!password.equals(confirmPassword)) {
-                System.out.println("Les contrasenyes no coincideixen.\n");
-                continue;
+            System.out.print("Confirmi la contrasenya: ");
+            if (password.equals(sc.next())) {
+                break;
             }
-            break;
-        }
+            System.out.println("Les contrasenyes no coincideixen.\n");
+        } while (true);
 
-        User user = new User(username, email, password);
-        mRM.addUser(user);
+        mRM.addUser(new User(username, email, password));
         System.out.println("\nUsuari creat correctament!");
     }
 
     public static boolean login(Scanner sc, MovieRecomendationManager mRM) {
         while (true) {
-            System.out.print("Introdueixi el nom d'usuari o correu electronic: ");
+            System.out.print("\nNom d'usuari o correu electrònic: ");
             String checkUser = sc.next();
-            System.out.print("Introdueixi un contrasenya: ");
+            System.out.print("Contrasenya: ");
             String checkPasswd = sc.next();
 
-            if (!mRM.checkUser(checkUser) || !mRM.checkPassword(checkUser, checkPasswd)) {
-                System.out.println("\nUsuari i/o contrsenya incorrectes");
+            boolean userExists = mRM.checkUser(checkUser);
+            boolean passwordCorrect = mRM.checkPassword(checkUser, checkPasswd);
 
-                while (true) {
-                    System.out.println("Vols registrar-te? (si/no)");
-                    String answer = sc.next().toLowerCase();
-
-                    if (answer.equals("si")) return false;
-                    if (answer.equals("no")) break;
-                    System.out.println("Si us plau, respongui amb “si” o “no”.");
-                }
-
-            } else {
+            if (userExists && passwordCorrect) {
                 System.out.println("\nS'ha iniciat sessió correctament");
                 return true;
             }
+
+            System.out.println("\nUsuari i/o contrasenya incorrectes");
+
+            String answer;
+            do {
+                System.out.print("Vols registrar-te? (si/no): ");
+                answer = sc.next().toLowerCase();
+            } while (!answer.equals("si") && !answer.equals("no"));
+
+            if (answer.equals("si")) return false;
         }
     }
 }
