@@ -1,4 +1,6 @@
+import java.awt.event.MouseWheelEvent;
 import java.util.InputMismatchException;
+import java.util.LinkedHashSet;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,7 +31,7 @@ public class Main {
                 return;
             }
 
-            boolean exit = showMovieMenu(sc);
+            boolean exit = showMovieMenu(sc,manager);
             if (exit) {
                 System.out.println("\nSortint del programa...");
                 System.out.println("Fins aviat!");
@@ -76,7 +78,7 @@ public class Main {
         }
     }
 
-    private boolean showMovieMenu(Scanner sc) {
+    private boolean showMovieMenu(Scanner sc, MovieRecomendationManager manager) {
         while (true) {
             try {
                 System.out.println("""
@@ -87,7 +89,9 @@ public class Main {
                         2. Cercador de pel·lícules
                         3. Recomanador de pel·lícules (no disponible)
                         4. El meu Perfil
-                        5. Tancar sessió
+                        5. Buscar perfil
+                        6. Acceptar peticions d'amistat
+                        7. Tancar sessió
                         0. Sortir del programa
                         """);
                 System.out.print("Triï una opció: ");
@@ -96,14 +100,22 @@ public class Main {
                 sc.nextLine();
                 switch (choice) {
                     case 1:
-                        // TODO
+                        manager.listMovies();
+                        break;
                     case 2:
-                        // TODO
+                        movieSearcher(sc,manager);
+                        break;
                     case 3:
                         System.out.println("Ho sentim, aquesta funció encara no està disponible");
                     case 4:
                         // TODO
                     case 5:
+                        profileSearcher(sc,manager);
+                        break;
+                    case 6:
+                        manageFriendRequests(sc,manager);
+                        break;
+                    case 7:
                         System.out.println("\nTancant sessió...\n");
                         return false;
                     case 0:
@@ -224,6 +236,7 @@ public class Main {
                 boolean passwordCorrect = manager.checkPassword(checkUser, checkPasswd);
 
                 if (userExists && passwordCorrect) {
+                    manager.setCurrentUser(manager.findUserByUsername(checkUser));
                     System.out.println("\nS'ha iniciat sessió correctament");
                     return true;
                 }
@@ -242,4 +255,53 @@ public class Main {
             }
         }
     }
+    public static void movieSearcher(Scanner sc, MovieRecomendationManager manager) {
+        System.out.println("Quina peli vols buscar?");
+        manager.filterMovies(sc.nextLine()).forEach(System.out::println);
+    }
+
+
+    public static void manageFriendRequests(Scanner sc,MovieRecomendationManager manager){
+        System.out.println(manager.getCurrentUser().getPendingFR());
+        System.out.println("1. Acceptar una petició d'amic");
+        System.out.println("2. Sortir");
+        int choice = sc.nextInt();
+        sc.nextLine();
+        switch (choice){
+            case 1:
+                System.out.println("Quina petició vols acceptar?");
+                int friendToAdd = sc.nextInt();
+                sc.nextLine();
+                manager.addFriend(manager.getCurrentUser(),manager.getCurrentUser().getPendingFR().get(friendToAdd-1));
+                break;
+
+            case 2: break;
+        }
+    }
+
+    public static void profileSearcher(Scanner sc, MovieRecomendationManager manager){
+        System.out.println("Quin és el nom del usuari que vols buscar?");
+        User foundUser = manager.findUserByUsername(sc.nextLine());
+        manager.displayFoundProfile(foundUser);
+
+        if (manager.areTheyFriends(manager.getCurrentUser(),foundUser)){
+            System.out.println("Vols veure el perfil?");
+            String answer = sc.nextLine();
+            if (answer.equalsIgnoreCase("si")) {
+                displayProfile(foundUser);
+            }
+        }else {
+            System.out.println("Vols afegir aquest usuari com a amic?");
+            String answer = sc.nextLine();
+            if (answer.equalsIgnoreCase("si")){
+                manager.addFriend(manager.getCurrentUser(),foundUser);
+            }
+
+        }
+    }
+
+    public static void displayProfile(User u){
+        System.out.println(u);
+    }
+
 }

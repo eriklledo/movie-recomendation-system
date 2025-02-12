@@ -1,4 +1,3 @@
-import javax.swing.text.html.Option;
 import java.time.Year;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -9,6 +8,7 @@ public class MovieRecomendationManager {
     private Set<Director> directors;
     private Set<Actor> actors;
     private Set<User> users;
+    private User currentUser;
 
     public MovieRecomendationManager(Set<Movie> movies, Set<Director> directors, Set<Actor> actors, Set<User> users) {
         this.movies = movies;
@@ -23,6 +23,7 @@ public class MovieRecomendationManager {
         users = new HashSet<>();
         directors = new HashSet<>();
         actors = new HashSet<>();
+        currentUser = null;
         addDefaultDirectors(createDefaultDirectors());
         addDefaultActors(createDefaultActors());
         addDefaultMovies();
@@ -196,6 +197,14 @@ public class MovieRecomendationManager {
         ));
     }
 
+    public User getCurrentUser(){
+        return currentUser;
+    }
+
+    public void setCurrentUser(User u){
+        this.currentUser = u;
+    }
+
     public Set<Movie> getMovies() {
         return movies;
     }
@@ -228,6 +237,16 @@ public class MovieRecomendationManager {
                 System.out.println("Usuari no trobat.");
             }
         }
+    }
+
+    public User findUserByUsername(String name){
+        for(User u: users){
+            if (u.getUsername().equalsIgnoreCase(name)){
+                return  u;
+            }
+        }
+        System.out.println("Usuari no trobat");
+        return null;
     }
 
     public boolean checkUser(String checkUser) {
@@ -268,9 +287,26 @@ public class MovieRecomendationManager {
     public void listMovies(){
         for (Movie m: movies){
             System.out.println(m);
-
         }
     }
+
+    public void addFriend(User currentUser, User foundUser){
+        foundUser.addPendingFriend(currentUser);
+    }
+
+    public boolean areTheyFriends(User currentUser, User foundUser){
+        return currentUser.getFriends().contains(foundUser) && foundUser.getFriends().contains(currentUser);
+    }
+
+    public void displayFoundProfile(User u){
+        System.out.println(u.getUsername());
+    }
+
+    public void acceptFriendRequest(User acceptedUser){
+        currentUser.getPendingFR().remove(acceptedUser);
+        currentUser.getFriends().add(acceptedUser);
+    }
+
 
 
 
