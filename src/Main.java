@@ -5,24 +5,43 @@ import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
+        new Main().run();
+    }
+
+    private void run() {
         MovieRecomendationManager mRM = new MovieRecomendationManager();
         Scanner sc = new Scanner(System.in);
 
         System.out.print("""
-            
-            --------------------------
-            RECOMANADOR DE PEL·LÍCULES
-            --------------------------
-            """);
+                
+                --------------------------
+                RECOMANADOR DE PEL·LÍCULES
+                --------------------------
+                
+                """);
 
-        boolean exit = false;
+        while (true) {
+            boolean loggedIn = showLoginMenu(sc, mRM);
+            if (!loggedIn) {
+                System.out.println("\nSortint del programa...");
+                System.out.println("Fins aviat!");
+                sc.close();
+                return;
+            }
 
-        while (!exit) {
-            boolean login = false;
+            boolean exit = showMovieMenu(sc);
+            if (exit) {
+                System.out.println("\nSortint del programa...");
+                System.out.println("Fins aviat!");
+                sc.close();
+                return;
+            }
+        }
+    }
 
-            do {
-                System.out.print("""
-                    
+    private boolean showLoginMenu(Scanner sc, MovieRecomendationManager mRM) {
+        while (true) {
+            System.out.print("""
                     INICI DE SESSIÓ
                     
                     1. Nou usuari
@@ -31,31 +50,29 @@ public class Main {
                     0. Sortir del programa
                     
                     """);
-                System.out.print("Triï una opció: ");
+            System.out.print("Triï una opció: ");
 
-                switch (sc.nextInt()) {
-                    case 1:
-                        createUser(sc, mRM);
-                        break;
-                    case 2:
-                        login = login(sc, mRM);
-                        break;
-                    case 3:
-                        login = true;
-                        break;
-                    case 0:
-                        System.out.println("\nFins aviat!");
-                        System.out.println("Sortint del programa...");
-                        exit = true;
-                        break;
-                    default:
-                        System.out.println("\nOpció no vàlida. Torni a intentar-ho.");
-                        break;
-                }
-            } while (!login && !exit);
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    createUser(sc, mRM);
+                    break;
+                case 2:
+                    if (login(sc, mRM)) return true;
+                    break;
+                case 3:
+                    return true;
+                case 0:
+                    return false;
+                default:
+                    System.out.println("\nOpció no vàlida. Torni a intentar-ho.\n");
+            }
+        }
+    }
 
-            while (login) {
-                System.out.println("""
+    private boolean showMovieMenu(Scanner sc) {
+        while (true) {
+            System.out.println("""
                     
                     PEL·LÍCULES DISPONIBLES
                     
@@ -65,40 +82,31 @@ public class Main {
                     4. El meu Perfil
                     5. Tancar sessió
                     0. Sortir del programa
-                    
                     """);
-                System.out.print("Triï una opció: ");
+            System.out.print("Triï una opció: ");
 
-                switch (sc.nextInt()) {
-                    case 1:
-                        System.out.println("1");
-                        break;
-                    case 2:
-                        System.out.println("2");
-                        break;
-                    case 3:
-                        System.out.println("Ho sentim, aquesta funció encara no està disponible");
-                        break;
-                    case 4:
-                        System.out.println("4");
-                        break;
-                    case 5:
-                        System.out.println("\nTancant sessió...");
-                        login = false;
-                        break;
-                    case 0:
-                        System.out.println("\nFins aviat!");
-                        System.out.println("Sortint del programa...");
-                        exit = true;
-                        login = false;
-                        break;
-                    default:
-                        System.out.println("Opció no vàlida. Torni a intentar-ho.");
-                        break;
-                }
+            int choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("1");
+                    // TODO
+                case 2:
+                    System.out.println("2");
+                    // TODO
+                case 3:
+                    System.out.println("Ho sentim, aquesta funció encara no està disponible");
+                case 4:
+                    System.out.println("4");
+                    // TODO
+                case 5:
+                    System.out.println("\nTancant sessió...\n");
+                    return false;
+                case 0:
+                    return true;
+                default:
+                    System.out.println("Opció no vàlida. Torni a intentar-ho.");
             }
         }
-        sc.close();
     }
 
     public static boolean MailChecking(String mail) {
