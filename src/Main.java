@@ -260,6 +260,7 @@ public class Main {
     }
 
 
+
     public static void manageFriendRequests(Scanner sc,MovieRecomendationManager manager){
         System.out.println(manager.getCurrentUser().getPendingFR());
         System.out.println("1. Acceptar una petició d'amic");
@@ -271,7 +272,7 @@ public class Main {
                 System.out.println("Quina petició vols acceptar?");
                 int friendToAdd = sc.nextInt();
                 sc.nextLine();
-                manager.addFriend(manager.getCurrentUser(),manager.getCurrentUser().getPendingFR().get(friendToAdd-1));
+                manager.acceptFriendRequest(manager.getCurrentUser().getPendingFR().get(friendToAdd-1));
                 break;
 
             case 2: break;
