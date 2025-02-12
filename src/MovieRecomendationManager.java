@@ -202,6 +202,22 @@ public class MovieRecomendationManager {
         ));
     }
 
+    public Set<Director> getDirectors() {
+        return directors;
+    }
+
+    public void setDirectors(Set<Director> directors) {
+        this.directors = directors;
+    }
+
+    public Set<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(Set<Actor> actors) {
+        this.actors = actors;
+    }
+
     public User getCurrentUser(){
         return currentUser;
     }
