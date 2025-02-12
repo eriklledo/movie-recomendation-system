@@ -1,4 +1,5 @@
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -253,13 +254,13 @@ public class Main {
 
                 String answer;
                 do {
-                    System.out.print("Vols tornar enrere per registrar-te: ");
+                    System.out.print("Vols tornar enrere i registrar-te? ");
                     answer = sc.next().toLowerCase();
-                } while (!answer.equals("si") && !answer.equals("no"));
+                } while (!answer.equalsIgnoreCase("si") || !answer.equalsIgnoreCase("s") && !answer.equalsIgnoreCase("no") || !answer.equalsIgnoreCase("n"));
 
-                if (answer.equals("si")) return false;
+                if (answer.equalsIgnoreCase("si")) return false;
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.out.println("\nRespon ❝si❞ o ❝no❞");
             }
         }
     }
@@ -270,8 +271,8 @@ public class Main {
     }
 
     public static void manageFriendRequests(Scanner sc,MovieRecomendationManager manager){
-        System.out.println(manager.getCurrentUser().getPendingFR());
-        System.out.println("1. Acceptar una petició d'amic");
+        System.out.println(manager.getCurrentUser().getUsername());
+        System.out.println("1. Acceptar sol·licitud d'amistad");
         System.out.println("2. Sortir");
         int choice = sc.nextInt();
         sc.nextLine();
@@ -283,28 +284,42 @@ public class Main {
                 manager.acceptFriendRequest(manager.getCurrentUser().getPendingFR().get(friendToAdd-1));
                 break;
 
-            case 2: break;
+            case 2:
+                break;
         }
     }
 
-    public static void profileSearcher(Scanner sc, MovieRecomendationManager manager){
+    public static void profileSearcher(Scanner sc, MovieRecomendationManager manager) {
         System.out.print("\nCerca un nom d'usuari: ");
-        User foundUser = manager.findUserByUsername(sc.nextLine());
-        manager.displayFoundProfile(foundUser);
+        try {
+            User foundUser = manager.findUserByUsername(sc.nextLine());
 
-        if (manager.areTheyFriends(manager.getCurrentUser(),foundUser)){
-            System.out.print("Vols veure el perfil de l'usuari " + foundUser + "?");
-            String answer = sc.nextLine();
-            if (answer.equalsIgnoreCase("si")) {
-                displayProfile(foundUser);
+            if (foundUser == null) {
+                throw new NullPointerException();
             }
-        } else {
-            System.out.print("Vols afegir aquest usuari com a amic? ");
-            String answer = sc.nextLine();
-            if (answer.equalsIgnoreCase("si")){
-                manager.addFriend(manager.getCurrentUser(),foundUser);
+
+            if (foundUser.getUsername().equals(manager.getCurrentUser().getUsername())) {
+                System.out.println("\nNo es pot enviar sol·licitud d'amistat a si mateix");
+            } else {
+                if (manager.areTheyFriends(manager.getCurrentUser(),foundUser)){
+                    System.out.print("Vols veure el perfil de " + foundUser.getUsername() + "?");
+                    String answer = sc.nextLine();
+                    if (answer.equalsIgnoreCase("si")) {
+                        displayProfile(foundUser);
+                    }
+                } else {
+                    System.out.print("Vols afegir a " + foundUser.getUsername() +" com a amic? ");
+                    String answer = sc.nextLine();
+                    if (answer.equalsIgnoreCase("si")) {
+                        manager.addFriend(manager.getCurrentUser(),foundUser);
+                        System.out.println("Sol·licitud d'amistat enviada");
+                    }
+                }
             }
+        } catch (NullPointerException e) {
+            System.out.println("\nIniciï sessió per demanar sol·licituds d'amistat");;
         }
+        System.out.println();
     }
 
     public static void displayProfile(User u){

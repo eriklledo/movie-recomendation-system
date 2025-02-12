@@ -245,26 +245,13 @@ public class MovieRecomendationManager {
         users.add(user);
     }
 
-    public void searchUserbyUsername(String userName) {
-        for (User user : users) {
-            if (user.getUsername().equals(userName)) {
-                System.out.println(user);
-            } else if (user.getMail().equals(userName)) {
-                System.out.println(user);
-
-            } else {
-                System.out.println("Usuari no trobat.");
-            }
-        }
-    }
-
     public User findUserByUsername(String name){
-        for(User u: users){
+        for (User u: users){
             if (u.getUsername().equalsIgnoreCase(name)){
                 return  u;
             }
         }
-        System.out.println("Usuari no trobat");
+        System.out.println("\nUsuari no trobat");
         return null;
     }
 
