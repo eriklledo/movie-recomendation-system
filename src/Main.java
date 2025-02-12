@@ -1,5 +1,3 @@
-import org.w3c.dom.ls.LSOutput;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -60,11 +58,13 @@ public class Main {
                 switch (choice) {
                     case 1:
                         createUser(sc, manager);
+                        enter(sc);
                         break;
                     case 2:
                         if (login(sc, manager)) return true;
                         break;
                     case 3:
+                        System.out.println();
                         return true;
                     case 0:
                         return false;
@@ -81,9 +81,8 @@ public class Main {
     private boolean showMovieMenu(Scanner sc, MovieRecomendationManager manager) {
         while (true) {
             try {
-                System.out.println("""
-                        
-                        PEL·LÍCULES DISPONIBLES
+                System.out.println("""                        
+                        RECOMANADOR DE PEL·LÍCULES
                         
                         1. Llistat de pel·lícules disponibles
                         2. Cercador de pel·lícules
@@ -101,20 +100,28 @@ public class Main {
                 switch (choice) {
                     case 1:
                         manager.listMovies();
+                        enter(sc);
                         break;
                     case 2:
                         movieSearcher(sc,manager);
+                        enter(sc);
                         break;
                     case 3:
-                        System.out.println("Ho sentim, aquesta funció encara no està disponible");
+                        System.out.println("\nHo sentim, aquesta funció encara no està disponible\n");
+                        enter(sc);
                         break;
                     case 4:
                         // TODO
+                        System.out.println();
+                        enter(sc);
+                        break;
                     case 5:
                         profileSearcher(sc,manager);
+                        enter(sc);
                         break;
                     case 6:
                         manageFriendRequests(sc,manager);
+                        enter(sc);
                         break;
                     case 7:
                         System.out.println("\nTancant sessió...\n");
@@ -238,7 +245,7 @@ public class Main {
 
                 if (userExists && passwordCorrect) {
                     manager.setCurrentUser(manager.findUserByUsername(checkUser));
-                    System.out.println("\nS'ha iniciat sessió correctament");
+                    System.out.println("\nS'ha iniciat sessió correctament\n");
                     return true;
                 }
 
@@ -258,7 +265,7 @@ public class Main {
     }
 
     public static void movieSearcher(Scanner sc, MovieRecomendationManager manager) {
-        System.out.print("Cerca una pel·lícula: ");
+        System.out.print("\nCerca una pel·lícula: ");
         manager.filterMovies(sc.nextLine()).forEach(System.out::println);
     }
 
@@ -281,23 +288,22 @@ public class Main {
     }
 
     public static void profileSearcher(Scanner sc, MovieRecomendationManager manager){
-        System.out.println("Quin és el nom del usuari que vols buscar?");
+        System.out.print("\nCerca un nom d'usuari: ");
         User foundUser = manager.findUserByUsername(sc.nextLine());
         manager.displayFoundProfile(foundUser);
 
         if (manager.areTheyFriends(manager.getCurrentUser(),foundUser)){
-            System.out.println("Vols veure el perfil?");
+            System.out.print("Vols veure el perfil de l'usuari " + foundUser + "?");
             String answer = sc.nextLine();
             if (answer.equalsIgnoreCase("si")) {
                 displayProfile(foundUser);
             }
-        }else {
-            System.out.println("Vols afegir aquest usuari com a amic?");
+        } else {
+            System.out.print("Vols afegir aquest usuari com a amic? ");
             String answer = sc.nextLine();
             if (answer.equalsIgnoreCase("si")){
                 manager.addFriend(manager.getCurrentUser(),foundUser);
             }
-
         }
     }
 
@@ -305,4 +311,8 @@ public class Main {
         System.out.println(u);
     }
 
+    public static void enter(Scanner sc) {
+        System.out.print("Prem enter per continuar.\n");
+        sc.nextLine();
+    }
 }

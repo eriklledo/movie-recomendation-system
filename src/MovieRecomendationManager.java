@@ -31,7 +31,6 @@ public class MovieRecomendationManager {
         addUser(new User(2, "Jordi", LocalDate.of(2000, 1, 1), "Spanish", "jordi", "jordi@mail.com", "password"));
         addUser(new User(3, "Alam", LocalDate.of(2006, 1, 1), "Spanish", "alam", "alam@mail.com", "contraseña"));
         addUser(new User(4, "Joan", LocalDate.of(2006, 1, 1), "Spanish", "joan", "joan@mail.com", "contrasenya"));
-
     }
 
     private Set<Director> createDefaultDirectors() {
@@ -121,7 +120,6 @@ public class MovieRecomendationManager {
 
 
     private void addDefaultMovies() {
-
         movies.add(new Movie(Year.of(2010), "Inception", 1,
                 Set.of(findDirectorByName("Christopher Nolan")),
                 Set.of(findActorByName("Leonardo DiCaprio"), findActorByName("Joseph Gordon-Levitt"), findActorByName("Ken Watanabe")),
@@ -291,9 +289,8 @@ public class MovieRecomendationManager {
     }
 
     public LinkedHashSet<Movie> filterMovies(String query) {
-        query = query.toLowerCase();
-
-        String finalQuery = query;
+        String finalQuery = query.toLowerCase();
+        System.out.println();
         return movies.stream()
                 .filter(movie -> movie.getTitle().toLowerCase().contains(finalQuery) ||
                         movie.getYear().toString().contains(finalQuery) ||
@@ -305,6 +302,7 @@ public class MovieRecomendationManager {
 
     public void listMovies(){
         movies.forEach(movie -> System.out.println("  - " + movie.getTitle() + " (" + movie.getYear() + ")"));
+        System.out.println();
     }
 
     public void addFriend(User currentUser, User foundUser){
