@@ -151,7 +151,7 @@ public class Main {
     }
 
     public static void createUser(Scanner sc, MovieRecomendationManager manager) {
-        String username, email, password;
+        String username, mail, password;
 
         while (true) {
             try {
@@ -174,17 +174,17 @@ public class Main {
         while (true) {
             try {
                 System.out.print("Correu electrònic: ");
-                email = sc.nextLine();
+                mail = sc.nextLine();
 
-                if (email.contains(" ")) {
+                if (mail.contains(" ")) {
                     throw new IllegalArgumentException("El correu electrònic no pot contenir espais.");
                 }
-                if (!MailChecking(email)) {
+                if (!MailChecking(mail)) {
                     System.out.println("Correu no vàlid\n");
                     continue;
                 }
 
-                String finalEmail = email;
+                String finalEmail = mail;
                 if (manager.getUsers().stream().anyMatch(user -> user.getMail().equals(finalEmail))) {
                     System.out.println("Aquest correu electrònic ja està registrat\n");
                     continue;
@@ -219,7 +219,7 @@ public class Main {
                 System.out.println(e.getMessage());
             }
         }
-        manager.addUser(new User(username, email, password));
+        manager.addUser(new User(username, mail, password));
         System.out.println("\nUsuari creat correctament!\n");
     }
 
