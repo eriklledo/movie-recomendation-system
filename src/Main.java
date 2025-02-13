@@ -276,17 +276,19 @@ public class Main {
 
     public static void manageFriendRequests(Scanner sc, MovieRecomendationManager manager) {
         System.out.println("\nTens " + manager.getCurrentUser().getPendingFR().size() + " solicituts d'amistat:");
-        System.out.println(manager.getCurrentUser().getPendingFR());
+        manager.displayFoundProfileList(manager.getCurrentUser().getPendingFR());
 
-        System.out.println("\n1. Acceptar sol·licitud d'amistad");
-        System.out.println("2. Tornar enrere");
-
-        System.out.println("Triï una opció: ");
+        System.out.println("""
+                
+                1. Acceptar sol·licitud d'amistat
+                2. Tornar enrere
+                """);
+        System.out.print("Triï una opció: ");
         int choice = sc.nextInt();
         sc.nextLine();
         switch (choice) {
             case 1:
-                System.out.print("Indica la petició a acceptar: ");
+                System.out.print("\nIndica la petició a acceptar: ");
                 int friendToAdd = sc.nextInt();
                 sc.nextLine();
                 manager.acceptFriendRequest(manager.getCurrentUser().getPendingFR().get(friendToAdd - 1));
@@ -295,6 +297,7 @@ public class Main {
             case 2:
                 break;
         }
+        System.out.println();
     }
 
     public static void profileSearcher(Scanner sc, MovieRecomendationManager manager) {
@@ -310,7 +313,9 @@ public class Main {
                 System.out.println("\nNo es pot enviar sol·licitud d'amistat a si mateix");
             } else {
                 if (manager.areTheyFriends(manager.getCurrentUser(), foundUser)) {
-                    System.out.print("Vols veure el perfil de " + foundUser.getUsername() + "? ");
+                    System.out.print("Vols veure el perfil de ");
+                    manager.displayFoundProfile(foundUser);
+                    System.out.print( "? ");
                     String answer = sc.nextLine();
                     if (answer.equalsIgnoreCase("si")) {
                         displayProfile(foundUser);
@@ -335,7 +340,7 @@ public class Main {
     }
 
     public static void enterToContinue(Scanner sc) {
-        System.out.print("Prem enterToContinue per continuar.\n");
+        System.out.print("Prem enter per continuar.\n");
         sc.nextLine();
     }
 }

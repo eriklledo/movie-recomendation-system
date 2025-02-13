@@ -126,9 +126,9 @@ public class User extends Person {
 
     @Override
     public String toString() {
-        for (int i = 0; i < getPendingFR().size(); i++) {
-            System.out.print(i + 1 + " ");
-        }
-        return username;
+        return "User: " + username  +
+                "\n  Nom: " + super.getName()
+                + "\n  Mail: " + mail +
+                "\n  Pel·lícula preferida: " + favouriteMovie.getTitle();
     }
 }

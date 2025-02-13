@@ -31,6 +31,7 @@ public class MovieRecomendationManager {
         addUser(new User(2, "Jordi", LocalDate.of(2000, 1, 1), "Spanish", "jordi", "jordi@mail.com", "password"));
         addUser(new User(3, "Alam", LocalDate.of(2006, 1, 1), "Spanish", "alam", "alam@mail.com", "contraseña"));
         addUser(new User(4, "Joan", LocalDate.of(2006, 1, 1), "Spanish", "joan", "joan@mail.com", "contrasenya"));
+        findUserByUsername("erik").setFavouriteMovie(filterMovies("Django Unchained").getFirst());
     }
 
     private Set<Director> createDefaultDirectors() {
@@ -302,12 +303,21 @@ public class MovieRecomendationManager {
     }
 
     public void displayFoundProfile(User u) {
-        System.out.println(u.getUsername());
+        System.out.print(u.getUsername() + " "+ u.getMail());
+    }
+
+    public void displayFoundProfileList(ArrayList<User>users) {
+        int n = 0;
+        for (User u: users){
+            n += 1;
+            System.out.println(n + " - " + u.getUsername());
+        }
     }
 
     public void acceptFriendRequest(User acceptedUser) {
         currentUser.getPendingFR().remove(acceptedUser);
         currentUser.getFriends().add(acceptedUser);
+        acceptedUser.getFriends().add(currentUser);
     }
 
     @Override
