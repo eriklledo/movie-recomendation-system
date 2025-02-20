@@ -275,7 +275,7 @@ public class Main {
     }
 
     public static void manageFriendRequests(Scanner sc, MovieRecomendationManager manager) {
-        System.out.println("\nTens " + manager.getCurrentUser().getPendingFR().size() + " solicituts d'amistat:");
+        System.out.println("\nTens " + manager.getCurrentUser().getPendingFR().size() + " sol·licituds d'amistat:");
         manager.displayFoundProfileList(manager.getCurrentUser().getPendingFR());
 
         System.out.println("""

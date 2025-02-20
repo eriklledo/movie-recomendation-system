@@ -11,22 +11,22 @@ public class Movie {
     private Set<String> genre;
     private Year year;
 
-    public Movie(Year year, String title, int id) {
-        this.year = year;
-        this.title = title;
+    public Movie(int id, String title, Year year) {
         this.id = id;
+        this.title = title;
         directors = new HashSet<>();
         actors = new HashSet<>();
         genre = new HashSet<>();
+        this.year = year;
     }
 
-    public Movie(Year year, String title, int id, Set<Director>directors, Set<Actor>actors, Set<String> genre) {
-        this.year = year;
-        this.title = title;
+    public Movie(int id, String title, Set<Director>directors, Set<Actor>actors, Set<String> genre, Year year) {
         this.id = id;
+        this.title = title;
         this.directors = directors;
         this.actors = actors;
         this.genre = genre;
+        this.year = year;
     }
 
 
